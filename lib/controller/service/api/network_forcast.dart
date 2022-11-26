@@ -13,9 +13,9 @@ class Network {
 
     if (response.statusCode == 200) {
       print("weather data : ${response.body}");
-      return WeatherForecastModel.fromJson(json.decode(response.body));
+      return WeatherForecastModel.fromJson(jsonDecode(response.body));
     } else {
-      throw Exception("error weather forecast");
+      throw Exception("network issue");
     }
   }
 }

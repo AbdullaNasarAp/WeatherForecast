@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:weatherforecast/controller/service/api/network_forcast.dart';
 import 'package:weatherforecast/controller/service/model/weather_forecast_model.dart';
+import 'package:weatherforecast/view/home/widgets/bottum_view.dart';
 import 'package:weatherforecast/view/home/widgets/mid_view.dart';
 
 class WeatherForecast extends StatefulWidget {
@@ -12,7 +15,7 @@ class WeatherForecast extends StatefulWidget {
 
 class _WeatherForecastState extends State<WeatherForecast> {
   Future<WeatherForecastModel>? forecastObject;
-  String _cityName = "dammam";
+  String _cityName = "delhi";
 
   @override
   void initState() {
@@ -22,29 +25,36 @@ class _WeatherForecastState extends State<WeatherForecast> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          textFormView(),
-          Container(
-              child: FutureBuilder<WeatherForecastModel>(
-            future: forecastObject,
-            builder: (BuildContext context,
-                AsyncSnapshot<WeatherForecastModel> snapshot) {
-              if (snapshot.hasData) {
-                return Column(
-                  children: [midView(snapshot)],
-                );
-              } else {
-                return Container(
-                  child: const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              }
-            },
-          ))
-        ],
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: ListView(
+          children: <Widget>[
+            textFormView(),
+            Container(
+                child: FutureBuilder<WeatherForecastModel>(
+              future: forecastObject,
+              builder: (BuildContext context,
+                  AsyncSnapshot<WeatherForecastModel> snapshot) {
+                if (snapshot.hasData) {
+                  return Column(
+                    children: [
+                      midView(snapshot),
+                      bottumView(snapshot, context)
+                    ],
+                  );
+                } else {
+                  return Container(
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+              },
+            ))
+          ],
+        ),
       ),
     );
   }
@@ -54,7 +64,9 @@ class _WeatherForecastState extends State<WeatherForecast> {
       padding: const EdgeInsets.all(20.0),
       child: Container(
         child: TextField(
+          style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
+              hintStyle: TextStyle(color: Colors.white),
               hintText: "Enter City Name",
               prefixIcon: const Icon(
                 Icons.search,
