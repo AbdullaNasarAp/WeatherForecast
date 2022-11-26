@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:weatherforecast/view/weather_forecast.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -13,13 +13,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
           bodyText1: TextStyle(color: Colors.white),
           bodyText2: TextStyle(color: Colors.white),
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: WeatherForecast(),
+      home: const WeatherForecast(),
     );
   }
 }
